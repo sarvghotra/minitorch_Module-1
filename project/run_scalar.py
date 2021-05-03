@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 import random
 import datasets
 
+
 PTS = 50
-DATASET = datasets.Simple(PTS, vis=True)
+DATASET = datasets.Simple(PTS, vis=True, port=40001)
 HIDDEN = 2
 RATE = 0.5
 

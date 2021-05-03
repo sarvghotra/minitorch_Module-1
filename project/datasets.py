@@ -22,10 +22,10 @@ def make_pts(N):
 
 
 class Graph:
-    def __init__(self, vis=False, vis_args={}):
+    def __init__(self, vis=False, port=8097):
         self.gifs = []
         if vis:
-            self.vis = visdom.Visdom(**vis_args)
+            self.vis = visdom.Visdom(port=port)
         else:
             self.vis = None
         self.first = True
@@ -74,8 +74,8 @@ class Graph:
 
 
 class Simple(Graph):
-    def __init__(self, N, vis=False, vis_args={}):
-        super().__init__(vis, vis_args)
+    def __init__(self, N, vis=False, port=8097):
+        super().__init__(vis, port)
         self.N = N
         self.X = make_pts(N)
         self.y = []
@@ -85,8 +85,8 @@ class Simple(Graph):
 
 
 class Split(Graph):
-    def __init__(self, N, vis=False, vis_args={}):
-        super().__init__(vis, vis_args)
+    def __init__(self, N, vis=False, port=8097):
+        super().__init__(vis, port)
         self.N = N
         self.X = make_pts(N)
         self.y = []
@@ -96,8 +96,8 @@ class Split(Graph):
 
 
 class Xor(Graph):
-    def __init__(self, N, vis=False, vis_args={}):
-        super().__init__(vis, vis_args)
+    def __init__(self, N, vis=False, port=8097):
+        super().__init__(vis, port)
         self.N = N
         self.X = make_pts(N)
         self.y = []

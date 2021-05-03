@@ -42,7 +42,8 @@ class Variable:
         """
         if d_output is None:
             d_output = 1.0
-        backpropagate(VariableWithDeriv(self, d_output))
+        v = VariableWithDeriv(self, d_output)
+        backpropagate(v)
 
     @property
     def derivative(self):
@@ -179,8 +180,14 @@ class FunctionBase:
             (see `is_constant` to remove unneeded variables)
 
         """
-        # TODO: Implement for Task 1.3.
-        raise NotImplementedError('Need to implement for Task 1.3')
+        var_dev_lst = []
+        derivs = cls.backward(ctx, d_output)
+        for i, v in enumerate(inputs):
+            if is_constant(v):
+                continue
+            d = derivs[i]
+            var_dev_lst.append(VariableWithDeriv(v, d))
+        return var_dev_lst
 
 
 def is_leaf(val):
@@ -202,5 +209,22 @@ def backpropagate(final_variable_with_deriv):
        final_variable_with_deriv (:class:`VariableWithDeriv`): The final variable
            and its derivative that we want to propagate backward to the leaves.
     """
-    # TODO: Implement for Task 1.4.
-    raise NotImplementedError('Need to implement for Task 1.4')
+    var_queue = []
+    var_queue.append(final_variable_with_deriv)
+    vars_in_queue = {}
+    vars_in_queue[final_variable_with_deriv.variable.name] = final_variable_with_deriv
+
+    while len(var_queue) > 0:
+        cur_v_d = var_queue.pop(0)
+        if cur_v_d.variable.history.is_leaf():
+            cur_v_d.variable._add_deriv(cur_v_d.deriv)
+            continue
+
+        var_with_derivs = cur_v_d.variable.history.backprop_step(cur_v_d.deriv)
+        for v_w_d in var_with_derivs:
+            if v_w_d.variable.name in vars_in_queue.keys():
+                # just update derivative of already present var in the queue
+                vars_in_queue[v_w_d.variable.name]._add_deriv(v_w_d.deriv)
+            else:
+                var_queue.append(v_w_d)
+

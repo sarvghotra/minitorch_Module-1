@@ -5,68 +5,144 @@ import math
 
 
 def mul(x, y):
-    ":math:`f(x, y) = x * y`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Returns the multiplication of `x` and `y` :math:`f(x, y) = x * y`
+
+    Args:
+        x (scalar): A scalar of any type
+        y (scalar): A scalar of any type
+
+    Returns:
+        x * y
+    """
+    return x * y
 
 
 def id(x):
-    ":math:`f(x) = x`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Identity function of `x` :math:`f(x) = x`
+
+    Args:
+        x (scalar): A scaler of any type
+
+    Returns:
+        x
+    """
+    return x
 
 
 def add(x, y):
-    ":math:`f(x, y) = x + y`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Returns sum of `x` and `y` :math:`f(x, y) = x + y`
+
+    Args:
+        x (scalar): A scalar of any type
+        y (scalar): A scalar of any type
+
+    Returns:
+        x + y
+    """
+    return x + y
 
 
 def neg(x):
-    ":math:`f(x) = -x`"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Returns negatation of `x` :math:`f(x) = -x`
+
+    Args:
+        x (scalar): A scalar of any type
+
+    Returns:
+        x
+    """
+    return -1 * x
 
 
 def lt(x, y):
-    ":math:`f(x) =` 1.0 if x is less than y else 0.0"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Implements: :math:`f(x) =` 1.0 if x is less than y else 0.0
+
+    Args:
+        x (scalar): A scalar of any type
+        y (scalar): A scalar of any type
+
+    Returns:
+        1.0 if x is less than y else 0.0
+    """
+    return 1.0 if x < y else 0.0
 
 
 def eq(x, y):
-    ":math:`f(x) =` 1.0 if x is equal to y else 0.0"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Implements: ":math:`f(x) =` 1.0 if x is equal to y else 0.0"
+
+    Args:
+        x (scalar): A scalar of any type
+        y (scalar): A scalar of any type
+
+    Returns:
+        1.0 if x is less than y else 0.0
+    """
+    return 1.0 if x == y else 0.0
 
 
 def max(x, y):
-    ":math:`f(x) =` x if x is greater than y else y"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Returns the max of `x` and `y` :math:`f(x) =` x if x is greater than y else y
+
+    Args:
+        x (scalar): A scalar of any type
+        y (scalar): A scalar of any type
+
+    Returns:
+        x if x is greater than y else y
+    """
+    return x if x > y else y
 
 
 def sigmoid(x):
-    r"""
-    :math:`f(x) =  \frac{1.0}{(1.0 + e^{-x})}`
+    """
+    Implements sigmoid function :math:`f(x) =  \frac{1.0}{(1.0 + e^{-x})}`
 
-    (See `<https://en.wikipedia.org/wiki/Sigmoid_function>`_ .)
+    Args:
+        x (scalar): A scalar of any type
 
-    Calculate as
-
-    :math:`f(x) =  \frac{1.0}{(1.0 + e^{-x})}` if x >=0 else :math:`\frac{e^x}{(1.0 + e^{x})}`
-
-    for stability.
+    Returns:
+        Value of sigmoid function
 
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    if x >= 0:
+        y = 1.0 / (1.0 + math.exp(-1.0 * x))
+    else:
+        y = math.exp(x) / (1.0 + math.exp(x))
+    return y
 
 
 def relu(x):
     """
-    :math:`f(x) =` x if x is greater than 0, else 0
+    Implements Relu: :math:`f(x) =` x if x is greater than 0, else 0
 
-    (See `<https://en.wikipedia.org/wiki/Rectifier_(neural_networks)>`_ .)
+    Args:
+        x (scalar): A scalar of any type
+
+    Returns:
+        Output value of relu function
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    return x if x > 0 else type(x)(0.0)
 
 
 def relu_back(x, y):
-    ":math:`f(x) =` y if x is greater than 0 else 0"
-    raise NotImplementedError('Need to include this file from past assignment.')
+    """
+    Implements :math:`f(x) =` y if x is greater than 0 else 0
+
+    Args:
+        x (scalar): A scalar of any type
+        y (scalar): A scalar of any type
+
+    Returns:
+        y if x is greater than 0 else 0
+    """
+    return y if x > 0 else 0
 
 
 EPS = 1e-6
@@ -109,13 +185,19 @@ def map(fn):
     See `<https://en.wikipedia.org/wiki/Map_(higher-order_function)>`_
 
     Args:
-        fn (one-arg function): Function from one value to one value.
+        fn (one-arg function): process one value
 
     Returns:
-        function : A function that takes a list, applies `fn` to each element, and returns a
-        new list
+        function : a function that takes a list and applies `fn` to each element
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    # TODO: Implement for Task 0.3.
+    res = []
+    def apply_fn(lst):
+        for l in lst:
+            res.append(fn(l))
+        return res
+
+    return apply_fn
 
 
 def negList(ls):
@@ -139,7 +221,15 @@ def zipWith(fn):
         applying fn(x, y) one each pair of elements.
 
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    res = []
+    def apply_fn(lst1, lst2):
+        assert len(lst1) == len(lst2)
+
+        for l1, l2 in zip(lst1, lst2):
+            res.append(l1 + l2)
+        return res
+
+    return apply_fn
 
 
 def addLists(ls1, ls2):
@@ -164,18 +254,36 @@ def reduce(fn, start):
         fn(x_1, x_0)))`
 
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    def apply_fn(ls):
+        res = start
+        for l in ls:
+            res = fn(l, res)
+        return res
+
+    return apply_fn
 
 
 def sum(ls):
     """
     Sum up a list using :func:`reduce` and :func:`add`.
+
+    Args:
+        ls (List): A list of numbers
+
+    Returns:
+        scalar : Sum of list `ls`
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    return reduce(add, 0.0)(ls)
 
 
 def prod(ls):
     """
     Product of a list using :func:`reduce` and :func:`mul`.
+
+    Args:
+        ls (List): A list of numbers
+
+    Return:
+        scalar : Product of List `ls` elements
     """
-    raise NotImplementedError('Need to include this file from past assignment.')
+    return reduce(mul, 1.0)(ls)
